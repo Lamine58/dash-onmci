@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('title', $title)
-
+<style>
+    .dropify-wrapper {
+        margin-bottom: 7px;
+    }
+</style>
 @section('content')
 
     <div class="main-content">
@@ -17,7 +21,7 @@
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Fournisseurs</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Configuration</a></li>
                                     <li class="breadcrumb-item active">{{$title}}</li>
                                 </ol>
                             </div>
@@ -26,7 +30,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('settings.save') }}" class="add_setting" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('setting.save') }}" class="add_setting" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{ $setting->id ?? '' }}">
                     <div class="row">
@@ -34,13 +38,24 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <input type="file" name="image_1" class="dropify" data-default-file="{{ isset($setting) && $setting->image_1 ? Storage::url($setting->image_1) : '' }}">
-                                            <input type="file" name="image_2" class="dropify" data-default-file="{{ isset($setting) && $setting->image_2 ? Storage::url($setting->image_2) : '' }}">
-                                            <input type="file" name="image_3" class="dropify" data-default-file="{{ isset($setting) && $setting->image_3 ? Storage::url($setting->image_3) : '' }}">
-                                            <input type="file" name="image_4" class="dropify" data-default-file="{{ isset($setting) && $setting->image_4 ? Storage::url($setting->image_4) : '' }}">
+                                        <div class="col-md-6 row">
+                                            <div class="col-md-6">
+                                                <input type="file" name="image_1" class="dropify" data-default-file="{{ isset($setting) && $setting->image_1 ? Storage::url($setting->image_1) : '' }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="file" name="image_2" class="dropify" data-default-file="{{ isset($setting) && $setting->image_2 ? Storage::url($setting->image_2) : '' }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="file" name="image_3" class="dropify" data-default-file="{{ isset($setting) && $setting->image_3 ? Storage::url($setting->image_3) : '' }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="file" name="image_4" class="dropify" data-default-file="{{ isset($setting) && $setting->image_4 ? Storage::url($setting->image_4) : '' }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="file" name="image_mission" class="dropify" data-default-file="{{ isset($setting) && $setting->image_mission ? Storage::url($setting->image_mission) : '' }}">
+                                            </div>
                                         </div>
-                                        <div class="col-md-10">
+                                        <div class="col-md-6">
                                             <div class="row g-3">
                 
                                                 <div class="col-lg-6">
@@ -52,7 +67,7 @@
                 
                                                     <div class="mt-3">
                                                         <label class="form-label">Sous-titre</label>
-                                                        <input type="text" name="subtitle" value="{{ $setting->subtitle ?? '' }}" class="form-control rounded-end" />
+                                                        <textarea  rows="7" type="text" name="subtitle" class="form-control rounded-end" >{{ $setting->subtitle ?? '' }}</textarea>
                                                     </div>
                 
                                                     <div class="mt-3">
@@ -69,7 +84,7 @@
                 
                                                 <div class="col-lg-6">
                 
-                                                    <div class="mt-3">
+                                                    <div>
                                                         <label class="form-label">Localisation</label>
                                                         <input type="text" name="location" value="{{ $setting->location ?? '' }}" class="form-control rounded-end" />
                                                     </div>
@@ -115,8 +130,6 @@
                         <!-- end col -->
                     </div>
                 </form>
-                
-
 
             </div>
             <!-- container-fluid -->
@@ -133,65 +146,14 @@
 
     <script>
 
-        $('#region_id').on('change',function(){
-
-            var regionId = $(this).val();
-
-            $.ajax({
-                url: '/regions/' + regionId + '/departements',
-                type: 'GET',
-                success: function(response) {
-
-                    $('#departement_id').select2('destroy');
-
-                    var options = '<option value="">Tout</option>';
-                    $.each(response, function(index, departement) {
-                        options += '<option value="' + departement.id + '">' + departement.name + '</option>';
-                    });
-                    $('#departement_id').html(options);
-                    $('#departement_id').select2();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-            
-        });
-
-
-        $('#departement_id').on('change',function(){
-
-            var departementId = $(this).val();
-
-            $.ajax({
-                url: '/departements/' + departementId + '/sous-prefectures',
-                type: 'GET',
-                success: function(response) {
-
-                    $('#sous_prefecture_id').select2('destroy');
-
-                    var options = '<option value="">Tout</option>';
-                    $.each(response, function(index, sous_prefecture) {
-                        options += '<option value="' + sous_prefecture.id + '">' + sous_prefecture.name + '</option>';
-                    });
-                    $('#sous_prefecture_id').html(options);
-                    $('#sous_prefecture_id').select2();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-            
-        });
-
-        $('.add_user').submit(function(e){
+        $('.add_setting').submit(function(e){
 
             e.preventDefault();
 
             var form = new FormData($(this)[0]);
 
-            var buttonDefault = $('#add_user').text();
-            var button = $('#add_user');
+            var buttonDefault = $('#add_setting').text();
+            var button = $('#add_setting');
 
             button.attr('disabled',true);
             button.text('Veuillez patienter ...');
@@ -218,7 +180,6 @@
                             backgroundColor: "#4CAF50", // green
                         }).showToast();
 
-                        window.location='{{route("user.index")}}'
                     }else{
                         Toastify({
                             text: result.message,

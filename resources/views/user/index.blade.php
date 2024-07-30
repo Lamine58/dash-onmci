@@ -39,7 +39,6 @@
                                             <th>Téléphone</th>
                                             <th>Email</th>
                                             <th>Type de compte</th>
-                                            <th>Région</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -52,7 +51,6 @@
                                                 <td>{{$user->phone}}</td>
                                                 <td>{{$user->email}}</td>
                                                 <td>{{$user->role->name}}</td>
-                                                <td>{{$user->region->name ?? 'Tout'}}</td>
                                                 <td>
                                                     @if(Auth::user()->permission('EDITION UTILISATEUR') || Auth::user()->permission('SUPPRESSION UTILISATEUR'))
                                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
