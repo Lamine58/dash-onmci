@@ -42,25 +42,27 @@
                         <i class="ri-group-line"></i> <span data-key="t-dashboards">Membres</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#project" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="project">
-                        <i class="ri-information-line"></i> <span data-key="t-authentication">Projets</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="project">
-                        <ul class="nav nav-sm flex-column" >
-                            @if(Auth::user()->permission("AJOUT TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un type d'assurance </a>
-                                </li>
-                            @endif
-                            @if(Auth::user()->permission("LISTE TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.index")}}" class="nav-link" data-key="t-calendar"> Liste type d'assurance  </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
+                @if(Auth::user()->permission('LISTE PROJET') || Auth::user()->permission('AJOUT PROJET'))
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#project" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="project">
+                            <i class="ri-information-line"></i> <span data-key="t-authentication">Projets</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="project">
+                            <ul class="nav nav-sm flex-column" >
+                                @if(Auth::user()->permission("AJOUT PROJET"))
+                                    <li class="nav-item">
+                                        <a href="{{route("project.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un projet </a>
+                                    </li>
+                                @endif
+                                @if(Auth::user()->permission("LISTE PROJET"))
+                                    <li class="nav-item">
+                                        <a href="{{route("project.index")}}" class="nav-link" data-key="t-calendar"> Listes projets  </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#event" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="event">
                         <i class="ri-mic-line"></i> <span data-key="t-authentication">Evènements</span>

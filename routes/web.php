@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InsuranceTypeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MediatequeController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/save-user', [UserController::class, 'save'])->name('user.save');
     Route::get('/delete-user', [UserController::class, 'delete'])->name('user.delete');
 
+    #projet
+    Route::get('/liste-des-projets', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/projet/{id}', [ProjectController::class, 'add'])->name('project.add');
+    Route::post('/save-project', [ProjectController::class, 'save'])->name('project.save');
+    Route::get('/delete-project', [ProjectController::class, 'delete'])->name('project.delete');
 
-        
-  
     #role
     Route::get('/liste-des-roles', [RoleController::class, 'index'])->name('role.index');
     Route::get('/role/{id}', [RoleController::class, 'add'])->name('role.add');

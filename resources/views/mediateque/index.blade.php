@@ -143,6 +143,17 @@
             background: white;
             padding: 20px 20px;
         }
+        .dropzone .dz-message .dz-button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            outline: inherit;
+            padding: 11px;
+        }
     </style>
     <script>
         $("#my-dropzone").dropzone({

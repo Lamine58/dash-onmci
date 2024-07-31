@@ -6,6 +6,7 @@
     use Illuminate\Support\Str;
     use Illuminate\Support\Facades\Auth;
     use App\Models\Media;
+    use Illuminate\Support\Facades\Storage;
 
     class MediatequeController extends Controller
     {
@@ -63,9 +64,11 @@
             
             Auth::user()->access('SUPPRESSION MEDIATHEQUE');
 
-            $permission = Media::find($request->id);
+            $media = Media::find($request->id);
 
-            if($permission->delete()){
+            Storage::delete('public/' . $media->file_path);
+
+            if($media->delete()){
                 return response()->json(['message' => 'Media supprimé avec succès',"status"=>"success"]);
             }else{
                 return response()->json(['message' => 'Echec de la suppression veuillez réessayer',"status"=>"error"]);
