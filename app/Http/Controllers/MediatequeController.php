@@ -58,4 +58,17 @@
 
             return response()->json(['error' => 'Aucun fichier téléchargé'], 400);
         }
+
+        public function delete(Request $request){
+            
+            Auth::user()->access('SUPPRESSION MEDIATHEQUE');
+
+            $permission = Media::find($request->id);
+
+            if($permission->delete()){
+                return response()->json(['message' => 'Media supprimé avec succès',"status"=>"success"]);
+            }else{
+                return response()->json(['message' => 'Echec de la suppression veuillez réessayer',"status"=>"error"]);
+            }
+        }
     }

@@ -37,10 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/save-user', [UserController::class, 'save'])->name('user.save');
     Route::get('/delete-user', [UserController::class, 'delete'])->name('user.delete');
 
-    Route::get('/liste-type-assurance', [InsuranceTypeController::class, 'index'])->name('insurance-type.index');
-    Route::get('/type-assurance/{id}', [InsuranceTypeController::class, 'add'])->name('insurance-type.add');
-    Route::post('/save-insurance-type', [InsuranceTypeController::class, 'save'])->name('insurance-type.save');
-    Route::get('/delete-insurance-type', [InsuranceTypeController::class, 'delete'])->name('insurance-type.delete');
+
         
   
     #role
@@ -64,5 +61,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mediateque', [MediatequeController::class, 'index'])->name('mediateque.index');
     Route::post('/upload', [MediatequeController::class, 'upload'])->name('mediateque.upload');
+    Route::get('/delete-mediateque', [MediatequeController::class, 'delete'])->name('mediateque.delete');
     
 });
