@@ -26,84 +26,112 @@
                     </div>
                 </div>
 
-                <form action="{{ route('settings.save') }}" class="add_setting" method="POST" enctype="multipart/form-data">
+                <form action="{{route('user.save')}}" class="add_user">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $setting->id ?? '' }}">
+                    <input type="hidden" name="id" value="{{$user->id}}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <input type="file" name="image_1" class="dropify" data-default-file="{{ isset($setting) && $setting->image_1 ? Storage::url($setting->image_1) : '' }}">
-                                            <input type="file" name="image_2" class="dropify" data-default-file="{{ isset($setting) && $setting->image_2 ? Storage::url($setting->image_2) : '' }}">
-                                            <input type="file" name="image_3" class="dropify" data-default-file="{{ isset($setting) && $setting->image_3 ? Storage::url($setting->image_3) : '' }}">
-                                            <input type="file" name="image_4" class="dropify" data-default-file="{{ isset($setting) && $setting->image_4 ? Storage::url($setting->image_4) : '' }}">
+                                            <input type="file" name="avatar" class="dropify" data-default-file="{{$user->avatar!=null ? Storage::url($user->avatar) : ''}}">
                                         </div>
                                         <div class="col-md-10">
                                             <div class="row g-3">
-                
+    
                                                 <div class="col-lg-6">
-                
-                                                    <div>
-                                                        <label class="form-label">Titre</label>
-                                                        <input type="text" name="title" value="{{ $setting->title ?? '' }}" class="form-control rounded-end" />
+                                            
+                                                    <div >
+                                                        <label class="form-label">Type de compte</label>
+                                                        <select name="role_id" id="role_id" class="form-control select2">
+                                                            @foreach($roles as $role)
+                                                                <option value="{{$role->id}}" {{$role->id==$user->role_id ? 'selected' : ''}}>{{$role->name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
-                
+
                                                     <div class="mt-3">
-                                                        <label class="form-label">Sous-titre</label>
-                                                        <input type="text" name="subtitle" value="{{ $setting->subtitle ?? '' }}" class="form-control rounded-end" />
+                                                        <label class="form-label">Matricule</label>
+                                                        <input type="text" name="matricule" value="{{$user->matricule}}" class="form-control rounded-end" />
                                                     </div>
-                
+
+                                                    <div class="mt-3">
+                                                        <label class="form-label">Fonction</label>
+                                                        <input type="text" name="fonction" value="{{$user->fonction}}" class="form-control rounded-end" />
+                                                    </div>
+
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Région</label>
+                                                        <select id="region_id" class="form-control select2" name="region_id">
+                                                            <option value="">Tout</option>
+                                                            @foreach($regions as $region)
+                                                                <option value="{{$region->id}}" {{$region->id==$user->region_id ? 'selected' : ''}} >{{$region->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Département</label>
+                                                        <select id="departement_id" class="form-control select2" name="departement_id"> 
+                                                            <option value="">Tout</option>
+                                                            @foreach(($user->region->departements ?? $departements) as $departement)
+                                                                <option value="{{$departement->id}}" {{$departement->id==$user->departement_id ? 'selected' : ''}} >{{$departement->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Sous prefecture</label>
+                                                        <select id="sous_prefecture_id" class="form-control select2" name="sous_prefecture_id"> 
+                                                            <option value="">Tout</option>
+                                                            @foreach(($user->departement->sous_prefectures ?? []) as $sous_prefecture)
+                                                                <option value="{{$sous_prefecture->id}}" {{$sous_prefecture->id==$user->sous_prefecture_id ? 'selected' : ''}} >{{$sous_prefecture->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+        
+                                                </div>
+        
+                                                <div class="col-lg-6">
+        
+                                                    <div>
+                                                        <label class="form-label">Nom</label>
+                                                        <input type="text" name="first_name" value="{{$user->first_name}}" class="form-control rounded-end" />
+                                                    </div>
+        
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Prénom</label>
+                                                        <input type="text" name="last_name" value="{{$user->last_name }}" class="form-control rounded-end" />
+                                                    </div>
+        
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Téléphone</label>
+                                                        <input type="text" name="phone" value="{{$user->phone}}" class="form-control rounded-end phone" />
+                                                    </div>
+
                                                     <div class="mt-3">
                                                         <label class="form-label">Email</label>
-                                                        <input type="email" name="email" value="{{ $setting->email ?? '' }}" class="form-control rounded-end" />
+                                                        <input type="text" name="email" value="{{$user->email}}" class="form-control rounded-end" />
                                                     </div>
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Téléphone</label>
-                                                        <input type="text" name="phone" value="{{ $setting->phone ?? '' }}" class="form-control rounded-end phone" />
-                                                    </div>
-                
+                                                    <br>
                                                 </div>
-                
-                                                <div class="col-lg-6">
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Localisation</label>
-                                                        <input type="text" name="location" value="{{ $setting->location ?? '' }}" class="form-control rounded-end" />
+                                                <div class="col-lg-12 row mt-2">
+                                                    <h4><small>Accès</small></h4>
+                                                    <hr>
+                                                    <div class="col-lg-6">
+                                                        <label class="form-label">Mot de passe</label>
+                                                        <input type="text" name="password" class="form-control rounded-end" />
                                                     </div>
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Facebook</label>
-                                                        <input type="text" name="facebook" value="{{ $setting->facebook ?? '' }}" class="form-control rounded-end" />
+                                                    <div class="col-lg-6">
+                                                        <label class="form-label">Confirmer  le mot de passe</label>
+                                                        <input type="text" name="password_confirmation" class="form-control rounded-end" />
                                                     </div>
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Twitter</label>
-                                                        <input type="text" name="twitter" value="{{ $setting->twitter ?? '' }}" class="form-control rounded-end" />
-                                                    </div>
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Instagram</label>
-                                                        <input type="text" name="instagram" value="{{ $setting->instagram ?? '' }}" class="form-control rounded-end" />
-                                                    </div>
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">YouTube</label>
-                                                        <input type="text" name="youtube" value="{{ $setting->youtube ?? '' }}" class="form-control rounded-end" />
-                                                    </div>
-                
-                                                    <div class="mt-3">
-                                                        <label class="form-label">LinkedIn</label>
-                                                        <input type="text" name="linkedin" value="{{ $setting->linkedin ?? '' }}" class="form-control rounded-end" />
-                                                    </div>
-                
                                                 </div>
-                
                                                 <div class="col-lg-12">
-                                                    <button id="add_setting" class="btn btn-primary btn-block" style="width:100%">Enregistrer</button>
+                                                    <button id="add_user" class="btn btn-primary btn-block" style="width:100%">Enregistrer</button>
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +143,6 @@
                         <!-- end col -->
                     </div>
                 </form>
-                
 
 
             </div>

@@ -104,11 +104,15 @@
                         <i class="ri-bank-card-2-line"></i> <span data-key="t-dashboards">Historique de paiement</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route("dashboard")}}">
-                        <i class="ri-image-add-line"></i> <span data-key="t-dashboards">Médiatèques</span>
-                    </a>
-                </li>
+
+                @if(Auth::user()->permission('MEDIATHEQUE'))
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{route("mediateque.index")}}">
+                            <i class="ri-image-add-line"></i> <span data-key="t-dashboards">Médiatèques</span>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="pages">
                         <i class="ri-earth-line"></i> <span data-key="t-authentication">Pages du site</span>

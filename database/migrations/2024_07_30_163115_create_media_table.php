@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('medias', function (Blueprint $table) {
 
             $table->uuid('id')->primary();
-            $table->string('type');
-            $table->string('data_id');
-            $table->string('model');
-            $table->string('file_path');
-            $table->string('file_name');
-            $table->string('mime_type');
+            $table->string('type')->nullable();
+            $table->string('data_id')->nullable();
+            $table->string('model')->nullable();
+            $table->string('file_path')->nullable();
+            $table->string('file_name')->nullable();
+            $table->string('mime_type')->nullable();
             $table->timestamps();
 
         });

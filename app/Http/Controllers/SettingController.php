@@ -73,7 +73,7 @@
                 $data
             );
         
-        return response()->json(['message' => 'Modification effectué avec succès', 'status' => 'success']);
+            return response()->json(['message' => 'Modification effectué avec succès', 'status' => 'success']);
             
 
         }

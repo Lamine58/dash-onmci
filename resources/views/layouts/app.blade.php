@@ -183,7 +183,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                <img src="{{asset('assets/images/logo-saf-short.png')}}" style="height: 30px" alt="">
+                                <img src="{{asset(env('LOGO'))}}" style="height: 30px" alt="">
                             </div>
                         </div>
                     </div>
