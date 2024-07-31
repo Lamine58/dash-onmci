@@ -8,7 +8,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InsuranceTypeController;
 use App\Http\Controllers\SettingController;
-
+use App\Http\Controllers\MediatequeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +61,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/configuration-du-site', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/save-setting', [SettingController::class, 'save'])->name('setting.save');
+
+    Route::get('/mediateque', [MediatequeController::class, 'index'])->name('mediateque.index');
+    Route::post('/upload', [MediatequeController::class, 'upload'])->name('mediateque.upload');
     
 });
