@@ -17,7 +17,7 @@
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Fournisseurs</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Utilisateur</a></li>
                                     <li class="breadcrumb-item active">{{$title}}</li>
                                 </ol>
                             </div>
@@ -59,36 +59,6 @@
                                                     <div class="mt-3">
                                                         <label class="form-label">Fonction</label>
                                                         <input type="text" name="fonction" value="{{$user->fonction}}" class="form-control rounded-end" />
-                                                    </div>
-
-                                                    <div  class="mt-3">
-                                                        <label class="form-label">Région</label>
-                                                        <select id="region_id" class="form-control select2" name="region_id">
-                                                            <option value="">Tout</option>
-                                                            @foreach($regions as $region)
-                                                                <option value="{{$region->id}}" {{$region->id==$user->region_id ? 'selected' : ''}} >{{$region->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-
-                                                    <div  class="mt-3">
-                                                        <label class="form-label">Département</label>
-                                                        <select id="departement_id" class="form-control select2" name="departement_id"> 
-                                                            <option value="">Tout</option>
-                                                            @foreach(($user->region->departements ?? $departements) as $departement)
-                                                                <option value="{{$departement->id}}" {{$departement->id==$user->departement_id ? 'selected' : ''}} >{{$departement->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-
-                                                    <div  class="mt-3">
-                                                        <label class="form-label">Sous prefecture</label>
-                                                        <select id="sous_prefecture_id" class="form-control select2" name="sous_prefecture_id"> 
-                                                            <option value="">Tout</option>
-                                                            @foreach(($user->departement->sous_prefectures ?? []) as $sous_prefecture)
-                                                                <option value="{{$sous_prefecture->id}}" {{$sous_prefecture->id==$user->sous_prefecture_id ? 'selected' : ''}} >{{$sous_prefecture->name}}</option>
-                                                            @endforeach
-                                                        </select>
                                                     </div>
         
                                                 </div>
@@ -159,57 +129,6 @@
 @section('script')
 
     <script>
-
-        $('#region_id').on('change',function(){
-
-            var regionId = $(this).val();
-
-            $.ajax({
-                url: '/regions/' + regionId + '/departements',
-                type: 'GET',
-                success: function(response) {
-
-                    $('#departement_id').select2('destroy');
-
-                    var options = '<option value="">Tout</option>';
-                    $.each(response, function(index, departement) {
-                        options += '<option value="' + departement.id + '">' + departement.name + '</option>';
-                    });
-                    $('#departement_id').html(options);
-                    $('#departement_id').select2();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-            
-        });
-
-
-        $('#departement_id').on('change',function(){
-
-            var departementId = $(this).val();
-
-            $.ajax({
-                url: '/departements/' + departementId + '/sous-prefectures',
-                type: 'GET',
-                success: function(response) {
-
-                    $('#sous_prefecture_id').select2('destroy');
-
-                    var options = '<option value="">Tout</option>';
-                    $.each(response, function(index, sous_prefecture) {
-                        options += '<option value="' + sous_prefecture.id + '">' + sous_prefecture.name + '</option>';
-                    });
-                    $('#sous_prefecture_id').html(options);
-                    $('#sous_prefecture_id').select2();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-            
-        });
 
         $('.add_user').submit(function(e){
 
