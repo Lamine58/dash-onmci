@@ -63,25 +63,27 @@
                         </div>
                     </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#event" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="event">
-                        <i class="ri-mic-line"></i> <span data-key="t-authentication">Evènements</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="event">
-                    <ul class="nav nav-sm flex-column" >
-                                @if(Auth::user()->permission("AJOUT EVENEMENT"))
-                                    <li class="nav-item">
-                                        <a href="{{route("event.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un evenement </a>
-                                    </li>
-                                @endif
-                                @if(Auth::user()->permission("LISTE EVENEMENT"))
-                                    <li class="nav-item">
-                                        <a href="{{route("event.index")}}" class="nav-link" data-key="t-calendar"> Listes evenements  </a>
-                                    </li>
-                                @endif
-                            </ul>
-                    </div>
-                </li>
+                @if(Auth::user()->permission('LISTE EVENEMENT') || Auth::user()->permission('AJOUT EVENEMENT'))
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#event" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="event">
+                            <i class="ri-mic-line"></i> <span data-key="t-authentication">Evènements</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="event">
+                        <ul class="nav nav-sm flex-column" >
+                                    @if(Auth::user()->permission("AJOUT EVENEMENT"))
+                                        <li class="nav-item">
+                                            <a href="{{route("event.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un evenement </a>
+                                        </li>
+                                    @endif
+                                    @if(Auth::user()->permission("LISTE EVENEMENT"))
+                                        <li class="nav-item">
+                                            <a href="{{route("event.index")}}" class="nav-link" data-key="t-calendar"> Listes evenements  </a>
+                                        </li>
+                                    @endif
+                                </ul>
+                        </div>
+                    </li>
+                @endif
                 @if(Auth::user()->permission('LISTE ACTUALITE') || Auth::user()->permission('AJOUT ACTUALITE'))
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="#blog" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="blog">
