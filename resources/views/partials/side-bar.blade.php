@@ -82,25 +82,27 @@
                             </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#actu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="actu">
-                        <i class="ri-newspaper-line"></i> <span data-key="t-authentication">Actualités</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="actu">
-                        <ul class="nav nav-sm flex-column" >
-                            @if(Auth::user()->permission("AJOUT TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un type d'assurance </a>
-                                </li>
-                            @endif
-                            @if(Auth::user()->permission("LISTE TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.index")}}" class="nav-link" data-key="t-calendar"> Liste type d'assurance  </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
+                @if(Auth::user()->permission('LISTE ACTUALITE') || Auth::user()->permission('AJOUT ACTUALITE'))
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#blog" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="blog">
+                            <i class="ri-information-line"></i> <span data-key="t-authentication">Actualités</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="blog">
+                            <ul class="nav nav-sm flex-column" >
+                                @if(Auth::user()->permission("AJOUT ACTUALITE"))
+                                    <li class="nav-item">
+                                        <a href="{{route("blog.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter une actualité </a>
+                                    </li>
+                                @endif
+                                @if(Auth::user()->permission("LISTE ACTUALITE"))
+                                    <li class="nav-item">
+                                        <a href="{{route("blog.index")}}" class="nav-link" data-key="t-calendar"> Listes actualités  </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{route("dashboard")}}">
                         <i class="ri-bank-card-2-line"></i> <span data-key="t-dashboards">Historique de paiement</span>
