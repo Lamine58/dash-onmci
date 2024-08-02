@@ -41,26 +41,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($projects as $project)
+                                        @foreach ($blogs as $blog)
                                             <tr>
-                                                <td>{{$project->title}}</td>
-                                                <td>{{$project->state}}</td>
-                                                <td>{{$project->created_at}}</td>
-                                                <td>{{$project->user->first_name}} {{$project->user->last_name}}</td>
+                                                <td>{{$blog->title}}</td>
+                                                <td>{{$blog->state}}</td>
+                                                <td>{{$blog->created_at}}</td>
+                                                <td>{{$blog->user->first_name}} {{$blog->user->last_name}}</td>
                                                 <td>
-                                                    @if(Auth::user()->permission('EDITION PROJET') || Auth::user()->permission('SUPPRESSION PROJET'))
+                                                    @if(Auth::user()->permission('EDITION PROJET') || Auth::user()->permission('SUPPRESSION ACTUALITE'))
                                                         <button class="btn btn-soft-secondary btn-sm dropdown"  data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="ri-more-fill align-middle"></i>
                                                         </button>
                                                         <ul class="dropdown-menu dropdown-menu-end">
-                                                            @if(Auth::user()->permission('EDITION PROJET'))
+                                                            @if(Auth::user()->permission('EDITION ACTUALITE'))
                                                                 <li>
-                                                                    <a class="dropdown-item edit-item-btn" href="{{route('project.add',[$project->id])}}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Modifier</a>
+                                                                    <a class="dropdown-item edit-item-btn" href="{{route('blog.add',[$blog->id])}}"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Modifier</a>
                                                                 </li>
                                                             @endif
-                                                            @if(Auth::user()->permission('SUPPRESSION PROJET'))
+                                                            @if(Auth::user()->permission('SUPPRESSION ACTUALITE'))
                                                                 <li>
-                                                                    <a href="javascript:void(0);" onclick="deleted('{{$project->id}}','{{route('project.delete')}}')" class="dropdown-item remove-item-btn">
+                                                                    <a href="javascript:void(0);" onclick="deleted('{{$blog->id}}','{{route('blog.delete')}}')" class="dropdown-item remove-item-btn">
                                                                         <i class="ri-delete-bin-fill align-bottom me-2 text-muted" ></i> Supprimer
                                                                     </a>
                                                                 </li>
@@ -75,18 +75,18 @@
                             </div>
                             <div>
                                 <ul class="pagination pagination-separated justify-content-center mb-0">
-                                    @if ($projects->onFirstPage())
+                                    @if ($blogs->onFirstPage())
                                         <li class="page-item disabled">
                                             <span class="page-link"><i class="mdi mdi-chevron-left"></i></span>
                                         </li>
                                     @else
                                         <li class="page-item">
-                                            <a href="{{ $projects->previousPageUrl() }}" class="page-link" rel="prev"><i class="mdi mdi-chevron-left"></i></a>
+                                            <a href="{{ $blogs->previousPageUrl() }}" class="page-link" rel="prev"><i class="mdi mdi-chevron-left"></i></a>
                                         </li>
                                     @endif
                         
-                                    @foreach ($projects->getUrlRange(1, $projects->lastPage()) as $page => $url)
-                                        @if ($page == $projects->currentPage())
+                                    @foreach ($blogs->getUrlRange(1, $blogs->lastPage()) as $page => $url)
+                                        @if ($page == $blogs->currentPage())
                                             <li class="page-item active">
                                                 <span class="page-link">{{ $page }}</span>
                                             </li>
@@ -97,9 +97,9 @@
                                         @endif
                                     @endforeach
                         
-                                    @if ($projects->hasMorePages())
+                                    @if ($blogs->hasMorePages())
                                         <li class="page-item">
-                                            <a href="{{ $projects->nextPageUrl() }}" class="page-link" rel="next"><i class="mdi mdi-chevron-right"></i></a>
+                                            <a href="{{ $blogs->nextPageUrl() }}" class="page-link" rel="next"><i class="mdi mdi-chevron-right"></i></a>
                                         </li>
                                     @else
                                         <li class="page-item disabled">

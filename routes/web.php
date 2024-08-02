@@ -10,6 +10,7 @@ use App\Http\Controllers\InsuranceTypeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MediatequeController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,4 +68,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/upload', [MediatequeController::class, 'upload'])->name('mediateque.upload');
     Route::get('/delete-mediateque', [MediatequeController::class, 'delete'])->name('mediateque.delete');
     
+
+    #blogs
+    Route::get('/liste-des-actualités', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/actualites/{id}', [BlogController::class, 'add'])->name('blog.add');
+    Route::post('/save-blog', [BlogController::class, 'save'])->name('blog.save');
+    Route::get('/delete-blog', [BlogController::class, 'delete'])->name('blog.delete');
 });
