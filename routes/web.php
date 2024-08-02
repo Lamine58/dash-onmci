@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InsuranceTypeController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MediatequeController;
 use App\Http\Controllers\ProjectController;
@@ -43,6 +43,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/projet/{id}', [ProjectController::class, 'add'])->name('project.add');
     Route::post('/save-project', [ProjectController::class, 'save'])->name('project.save');
     Route::get('/delete-project', [ProjectController::class, 'delete'])->name('project.delete');
+
+    #evenement
+    Route::get('/liste-des-evenements', [EventController::class, 'index'])->name('event.index');
+    Route::get('/evenement/{id}', [EventController::class, 'add'])->name('event.add');
+    Route::post('/save-event', [EventController::class, 'save'])->name('event.save');
+    Route::get('/delete-event', [EventController::class, 'delete'])->name('event.delete');
 
     #role
     Route::get('/liste-des-roles', [RoleController::class, 'index'])->name('role.index');

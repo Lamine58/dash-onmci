@@ -68,18 +68,18 @@
                         <i class="ri-mic-line"></i> <span data-key="t-authentication">Evènements</span>
                     </a>
                     <div class="collapse menu-dropdown" id="event">
-                        <ul class="nav nav-sm flex-column" >
-                            @if(Auth::user()->permission("AJOUT TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un type d'assurance </a>
-                                </li>
-                            @endif
-                            @if(Auth::user()->permission("LISTE TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.index")}}" class="nav-link" data-key="t-calendar"> Liste type d'assurance  </a>
-                                </li>
-                            @endif
-                        </ul>
+                    <ul class="nav nav-sm flex-column" >
+                                @if(Auth::user()->permission("AJOUT EVENEMENT"))
+                                    <li class="nav-item">
+                                        <a href="{{route("event.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un evenement </a>
+                                    </li>
+                                @endif
+                                @if(Auth::user()->permission("LISTE EVENEMENT"))
+                                    <li class="nav-item">
+                                        <a href="{{route("event.index")}}" class="nav-link" data-key="t-calendar"> Listes evenements  </a>
+                                    </li>
+                                @endif
+                            </ul>
                     </div>
                 </li>
                 <li class="nav-item">
