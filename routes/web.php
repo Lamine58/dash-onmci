@@ -67,6 +67,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/delete-permission', [PermissionController::class, 'delete'])->name('permission.delete');
 
 
+    Route::get('/page/{page}', [WebsiteController::class, 'page'])->name('website.page');
+
     Route::get('/configuration-du-site', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/save-setting', [SettingController::class, 'save'])->name('setting.save');
 

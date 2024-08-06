@@ -125,14 +125,9 @@
                     </a>
                     <div class="collapse menu-dropdown" id="pages">
                         <ul class="nav nav-sm flex-column" >
-                            @if(Auth::user()->permission("AJOUT TYPE D'ASSURANCE"))
+                            @if(Auth::user()->permission("GESTION DE PAGE"))
                                 <li class="nav-item">
-                                    <a href="{{route("insurance-type.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un type d'assurance </a>
-                                </li>
-                            @endif
-                            @if(Auth::user()->permission("LISTE TYPE D'ASSURANCE"))
-                                <li class="nav-item">
-                                    <a href="{{route("insurance-type.index")}}" class="nav-link" data-key="t-calendar"> Liste type d'assurance  </a>
+                                    <a href="{{route("website.page",['qui-sommes-nous'])}}" class="nav-link" data-key="t-calendar"> Qui sommes-nous ? </a>
                                 </li>
                             @endif
                         </ul>
