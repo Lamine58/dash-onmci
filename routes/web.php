@@ -11,6 +11,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MediatequeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\WebsiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,11 +69,13 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/page/{page}', [WebsiteController::class, 'page'])->name('website.page');
+    Route::post('/save-page', [WebsiteController::class, 'save'])->name('website.save');
 
     Route::get('/configuration-du-site', [SettingController::class, 'index'])->name('setting.index');
     Route::post('/save-setting', [SettingController::class, 'save'])->name('setting.save');
 
     Route::get('/mediateque', [MediatequeController::class, 'index'])->name('mediateque.index');
+    Route::get('/medias', [MediatequeController::class, 'medias'])->name('mediateque.medias');
     Route::post('/upload', [MediatequeController::class, 'upload'])->name('mediateque.upload');
     Route::get('/delete-mediateque', [MediatequeController::class, 'delete'])->name('mediateque.delete');
     

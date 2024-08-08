@@ -87,7 +87,7 @@
                 @if(Auth::user()->permission('LISTE ACTUALITE') || Auth::user()->permission('AJOUT ACTUALITE'))
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="#blog" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="blog">
-                            <i class="ri-information-line"></i> <span data-key="t-authentication">Actualités</span>
+                            <i class="ri-newspaper-line"></i> <span data-key="t-authentication">Actualités</span>
                         </a>
                         <div class="collapse menu-dropdown" id="blog">
                             <ul class="nav nav-sm flex-column" >
@@ -119,20 +119,22 @@
                     </li>
                 @endif
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="pages">
-                        <i class="ri-earth-line"></i> <span data-key="t-authentication">Pages du site</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="pages">
-                        <ul class="nav nav-sm flex-column" >
-                            @if(Auth::user()->permission("GESTION DE PAGE"))
-                                <li class="nav-item">
-                                    <a href="{{route("website.page",['qui-sommes-nous'])}}" class="nav-link" data-key="t-calendar"> Qui sommes-nous ? </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </li>
+                @if(Auth::user()->permission("GESTION DE PAGE"))
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#pages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="pages">
+                            <i class="ri-earth-line"></i> <span data-key="t-authentication">Pages du site</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="pages">
+                            <ul class="nav nav-sm flex-column" >
+                               @foreach(App\Models\Setting::pages() as $key => $value) 
+                                    <li class="nav-item">
+                                        <a href="{{route("website.page",[$key])}}" class="nav-link" data-key="t-calendar"> {{$value[0]}} </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </li>
+                @endif
 
                 @if(Auth::user()->permission('CONFIGURATION SITE'))
                     <li class="nav-item">

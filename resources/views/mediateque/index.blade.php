@@ -17,6 +17,7 @@
         color: #007bff; 
     }
     .media-bg {
+        z-index: 999;
         border: 1px solid #dcdcdc;
         border-radius: 5px;
         width: 100%;
@@ -27,15 +28,24 @@
         position: relative;
     }
     .delete-icon {
+        z-index: 1000;
         position: absolute;
         top: 5px;
-        right: 5px;
+        right: 15px;
         color: #dc3545;
         font-size: 24px;
         cursor: pointer;
     }
     .delete-icon:hover {
         color: #c82333;
+    }
+    .fancy{
+        position: absolute;
+        z-index: 999;
+        width: 100%;
+        height: 150px;
+        display: block;
+        top: 0;
     }
 </style>
 
@@ -67,17 +77,21 @@
                                 <div class="col-2 media-item">
                                     @if($media->type == 'image')
                                         <div class="media-bg" style="background-image: url('{{ asset('storage/' . $media->file_path) }}');">
-                                            @if(Auth::user()->permission('SUPPRESSION MEDIATHEQUE'))
-                                                <i class="ri-close-circle-fill delete-icon" onclick="deleted('{{$media->id}}','{{route('mediateque.delete')}}')"></i>
-                                            @endif
                                         </div>
+                                        @if(Auth::user()->permission('SUPPRESSION MEDIATHEQUE'))
+                                            <i class="ri-close-circle-fill delete-icon" onclick="deleted('{{$media->id}}','{{route('mediateque.delete')}}')"></i>
+                                        @endif
+                                        <a data-fancybox="gallery" href="{{ asset('storage/' . $media->file_path) }}" class="fancy">
+                                        </a>
                                     @else
                                         <div class="media-bg text-center">
-                                            @if(Auth::user()->permission('SUPPRESSION MEDIATHEQUE'))
-                                                <i class="ri-close-circle-fill delete-icon" onclick="deleted('{{$media->id}}','{{route('mediateque.delete')}}')"></i>
-                                            @endif
                                             <i class="media-icon {{ $media->icon }}"></i>
                                         </div>
+                                        @if(Auth::user()->permission('SUPPRESSION MEDIATHEQUE'))
+                                            <i class="ri-close-circle-fill delete-icon" onclick="deleted('{{$media->id}}','{{route('mediateque.delete')}}')"></i>
+                                        @endif
+                                        <a data-fancybox="gallery" href="{{ asset('storage/' . $media->file_path) }}" class="fancy">
+                                        </a>
                                     @endif
                                     <small>{{$media->file_name}}</small>
                                 </div>

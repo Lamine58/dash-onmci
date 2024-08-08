@@ -74,4 +74,11 @@
                 return response()->json(['message' => 'Echec de la suppression veuillez réessayer',"status"=>"error"]);
             }
         }
+
+        public function medias()
+        {
+            $medias = Media::all();
+            return view('mediateque.medias',compact('medias'));
+        }
+
     }

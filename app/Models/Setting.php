@@ -28,10 +28,9 @@
          *
          * @var array
          */
-        protected $fillable = [
-            'title', 'subtitle', 'image_1', 'image_2', 'image_3', 'image_4', 'image_mission',
-            'email', 'phone', 'location', 'facebook', 'twitter', 'instagram',
-            'youtube', 'linkedin'
+        protected $guarded = [
+            'created_at',
+            'updated_at',
         ];
 
         /**
@@ -45,4 +44,18 @@
                 $model->{$model->getKeyName()} = Str::uuid()->toString();
             });
         }
+
+        public static function pages(){
+            return [
+                "qui-sommes-nous"=>["Qui sommes-nous?","about"],
+                "missions"=>["Missions","mission"],
+                "membres"=>["Membres","team"],
+                "organigramme"=>["Organigramme","organigram"],
+                "inscription"=>["Inscription","register"],
+                "radiation"=>["Radiation","radiation"],
+                "bonne-conduite"=>["Bonne conduite","good_behavior"],
+                "consentement-eclaire"=>["Consentement éclairé","informed_consent"],
+            ];
+        }
+        
     }

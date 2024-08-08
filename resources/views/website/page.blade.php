@@ -16,7 +16,7 @@
         position: relative;
     }
     .media-icon {
-        font-size: 30px;
+        font-size: 50px;
         text-align: center;
         line-height: 150px;
         margin-top: 47px;
@@ -60,7 +60,7 @@
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Actualités</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Projet</a></li>
                                     <li class="breadcrumb-item active">{{$title}}</li>
                                 </ol>
                             </div>
@@ -69,69 +69,24 @@
                     </div>
                 </div>
 
-                <form action="{{route('blog.save')}}" class="add_blog">
+                <form action="{{route('website.save')}}" class="save_website">
                     @csrf
-                    <input type="hidden" name="id" value="{{$blog->id}}">
-                    <input type="hidden" value="" id="media_id" name="media_ids">
+                    <input type="hidden" name="id" value="{{$setting->id}}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <input type="file" name="image" class="dropify" data-default-file="{{$blog->image!=null ? Storage::url($blog->image) : ''}}">
-                                            <br>
-                                            <div action='{{route('mediateque.upload')}}?_token={{csrf_token()}}' id="dropzone" class="dropzone">@csrf</div>
-                                            <br>
-                                            <div class="row">
-                                                @foreach($blog->medias as $media)
-                                                    <div class="col-2 media-item">
-                                                        @if($media->type == 'image')
-                                                            <div class="media-bg" style="background-image: url('{{ asset('storage/' . $media->file_path) }}');">
-                                                                @if(Auth::user()->permission('SUPPRESSION MEDIATHEQUE'))
-                                                                    <i class="ri-close-circle-fill delete-icon" onclick="deleted('{{$media->id}}','{{route('mediateque.delete')}}')"></i>
-                                                                @endif
-                                                            </div>
-                                                        @else
-                                                            <div class="media-bg text-center">
-                                                                @if(Auth::user()->permission('SUPPRESSION MEDIATHEQUE'))
-                                                                    <i class="ri-close-circle-fill delete-icon" onclick="deleted('{{$media->id}}','{{route('mediateque.delete')}}')"></i>
-                                                                @endif
-                                                                <i class="media-icon {{ $media->icon }}"></i>
-                                                            </div>
-                                                        @endif
-                                                        <small>{{$media->file_name}}</small>
-                                                    </div>
-                                                @endforeach
+                                        <div class="col-md-12">
+
+                                            <div class="mt-3">
+                                                <label class="form-label">Contenu de la page {{strtolower($title)}}</label>
+                                                <textarea class="summernote" name="{{$page}}" >{!!$setting->$page!!}</textarea>
                                             </div>
+
                                         </div>
-                                        <div class="col-md-7">
-                                            <div class="row g-3">
-    
-                                                <div class="col-lg-12">
-                                            
-                                                    <div>
-                                                        <select name="state" required  class="form-control rounded-end">
-                                                            <option {{$blog->title=='Publier' ? 'selected' : ''}}>Publier</option>
-                                                            <option {{$blog->title=='Brouillon' ? 'selected' : ''}}>Brouillon</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Titre</label>
-                                                        <input type="text" name="title" value="{{$blog->title}}" class="form-control rounded-end" required />
-                                                    </div>
-
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Description</label>
-                                                        <textarea class="summernote" name="description" >{!!$blog->description!!}</textarea>
-                                                    </div>
-        
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <button id="add_blog" class="btn btn-primary btn-block" style="width:100%">Enregistrer</button>
-                                                </div>
-                                            </div>
+                                        <div class="col-lg-12">
+                                            <button id="save_website" class="btn btn-primary btn-block" style="width:100%">Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>
@@ -159,6 +114,7 @@
                 </div>
             </div>
         </div>
+        
 
 @endsection
 
@@ -168,13 +124,16 @@
 
 @section('script')
 
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.css" integrity="sha512-7uSoC3grlnRktCWoO4LjHMjotq8gf9XDFQerPuaph+cqR7JC9XKGdvN+UwZMC14aAaBDItdRj3DcSDs4kMWUgg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js" integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/js/all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
 
     <style>
         .dropzone {
@@ -198,7 +157,6 @@
 
     <script>
 
-
         var globalContext;
         
         $(document).ready(function() {
@@ -207,7 +165,7 @@
             
             const fontSizesArray=Array.from({length:100},(_,i)=>(i+1).toString());console.log(fontSizesArray);
 
-            $('.summernote').summernote({height:"400px",
+            $('.summernote').summernote({height:"700px",
                 toolbar: [
                     ['style', ['bold', 'italic', 'underline', 'clear', 'fontsize']],
                     ['font', ['strikethrough', 'superscript', 'subscript', 'fontsize', 'color']],
@@ -259,38 +217,15 @@
             }
             $('#modal').modal('hide');
         }
-
-        $("#dropzone").dropzone({
-            dictDefaultMessage: "Déposez vos fichiers ici ou cliquez pour télécharger.",
-            dictFallbackMessage: "Votre navigateur ne prend pas en charge le glisser-déposer de fichiers.",
-            dictFallbackText: "Veuillez utiliser le formulaire de secours ci-dessous pour télécharger vos fichiers comme avant.",
-            dictFileTooBig: "Le fichier est trop volumineux ",
-            dictInvalidFileType: "Vous ne pouvez pas télécharger des fichiers de ce type.",
-            dictResponseError: "Le serveur a répondu.",
-            dictCancelUpload: "Annuler le téléchargement",
-            dictCancelUploadConfirmation: "Êtes-vous sûr de vouloir annuler ce téléchargement ?",
-            dictRemoveFile: "Supprimer le fichier",
-            dictMaxFilesExceeded: "Vous ne pouvez pas télécharger plus de fichiers.",
-            init: function() {
-                this.on("success", function(file, response) {
-                    console.log("Fichier téléchargé avec succès");
-                    $("#media_id").val($("#media_id").val()+response.media.id+',');
-                });
-                this.on("error", function(file, response) {
-                    console.log("Erreur lors du téléchargement du fichier");
-                });
-            }
-        });
-
       
-        $('.add_blog').submit(function(e){
+        $('.save_website').submit(function(e){
 
             e.preventDefault();
 
             var form = new FormData($(this)[0]);
 
-            var buttonDefault = $('#add_blog').text();
-            var button = $('#add_blog');
+            var buttonDefault = $('#save_website').text();
+            var button = $('#save_website');
 
             button.attr('disabled',true);
             button.text('Veuillez patienter ...');
@@ -317,7 +252,6 @@
                             backgroundColor: "#4CAF50", // green
                         }).showToast();
 
-                        window.location='{{route("blog.index")}}'
                     }else{
                         Toastify({
                             text: result.message,

@@ -148,6 +148,17 @@
             <!-- container-fluid -->
         </div>
         
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-body row" id="add">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">Fermer</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
 @endsection
 
@@ -187,11 +198,67 @@
 
     <script>
 
+
+        var globalContext;
+        
         $(document).ready(function() {
 
-            $('.summernote').summernote({height:400});
+            $("#add").load("{{route('mediateque.medias')}}");
+            
+            const fontSizesArray=Array.from({length:100},(_,i)=>(i+1).toString());console.log(fontSizesArray);
+
+            $('.summernote').summernote({height:"400px",
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear', 'fontsize']],
+                    ['font', ['strikethrough', 'superscript', 'subscript', 'fontsize', 'color']],
+                    ['fontsize', fontSizesArray],
+                    ['fontname', ['fontname']],
+                    ['color', ['forecolor', 'backcolor']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview']],
+                    ['help', ['help']],
+                    ['custom', ['media']]
+                ],
+                fontSizes: fontSizesArray,
+                buttons: {
+                    media: function(context) {
+                        var ui = $.summernote.ui;
+                        globalContext = context;
+                        var button = ui.button({
+                            contents: '<i class="fa fa-folder"></i> Multimédia',
+                            tooltip: 'Multimédia',
+                            click: function() {
+                                $('#modal').modal('show');
+                            }
+                        });
+                        return button.render();
+                    }
+                }
+            });
+            
             
         });
+
+        $('.close').on('click',function(){ $('#modal').modal('hide'); })
+
+        function addImage(url) {
+            if (url) {
+                var extension = url.split('.').pop().toLowerCase();
+                if (extension === 'pdf') {
+                    var pdfElement = $('<embed>').attr('src', url).attr('type', 'application/pdf').css('width', '50%').css('height', '500px');
+                    globalContext.invoke('editor.insertNode', pdfElement[0]);
+                } else if (extension === 'mp4' || extension === 'avi' || extension === 'mov') {
+                    var videoElement = $('<video controls>').css('width', '50%').append($('<source>').attr('src', url).attr('type', 'video/' + extension));
+                    globalContext.invoke('editor.insertNode', videoElement[0]);
+                } else {
+                    var imgElement = $('<img>').attr('src', url).css('width', '50%');
+                    globalContext.invoke('editor.insertNode', imgElement[0]);
+                }
+            }
+            $('#modal').modal('hide');
+        }
 
 
         $("#dropzone").dropzone({
