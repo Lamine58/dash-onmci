@@ -55,6 +55,18 @@
                 "radiation"=>["Radiation","radiation"],
                 "bonne-conduite"=>["Bonne conduite","good_behavior"],
                 "consentement-eclaire"=>["Consentement éclairé","informed_consent"],
+                "conditions-remplacement"=>["Conditions de remplacement","conditions_remplacement"],
+                "conditions-exercice"=>["Conditions d'exercice","conditions_exercice"],
+                "histoire"=>["Historique",'histoire'],
+                "nos-textes"=>["Nos textes",'textes'],
+                "conseil-national"=>["Conseil national",'conseil_national'],
+                "observatoire-medical"=>["Observatoire médical",'observatoire_medical'],
+                "formulaire-validation"=>["Formulaire de pré validation",'formulaire_validation'],
+                "bonne-conduite"=>["Bonne conduite",'bonne_conduite'],
+                "consentement-eclaire"=>["Consentement éclaire",'consentement_eclaire'],
+                "cycle-doctoral"=>["Le cycle doctoral & post doctoral","cycle_doctoral"],
+                "conditions-remplacement-etudiant"=>["Les conditions pour effectuer un remplacement","conditions_remplacement_etudiant"],
+                "associations-organisations"=>["Les associations & organisations d'étudiants","associations_organisations"],
             ];
         }
         

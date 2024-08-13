@@ -29,7 +29,7 @@
 
             <div id="two-column-menu">
             </div>
-            <ul class="navbar-nav" id="navbar-nav">
+            <ul class="navbar-nav" id="navbar-nav" style="overflow: auto;height: 100%;">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 
                 <li class="nav-item">
